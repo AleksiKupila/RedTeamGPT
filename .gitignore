@@ -1,0 +1,40 @@
+# Flask
+
+flask_session/
+
+# Python
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+
+# Images
+
+*.webp
+*.png
+*.jpg
+*.jpeg
+
+# Document files
+
+*.txt
+*.json
+*.pdf
+*.docx
+*.xlsx
+*.csv
+*.md
+
+# Audio
+
+*.wav
+*.mp3
+
+# Exceptions
+
+!requirements.txt
+!example.png
+!logo.png
+!README.md
