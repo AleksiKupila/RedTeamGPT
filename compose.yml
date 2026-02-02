@@ -1,0 +1,38 @@
+services:
+  db:
+      image: mysql:5.7
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: dvwa
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+        interval: 5s
+        retries: 10
+  dvwa:
+    image: vulnerables/web-dvwa
+    ports:
+      - "8080:80"   # expose DVWA on localhost:8080
+    container_name: target_dvwa
+    environment:
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: dvwa
+      MYSQL_DATABASE: dvwa
+      MYSQL_ROOT_PASSWORD: root
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - adversary_sim_network
+
+  executor:
+    build: ./executor
+    container_name: command_executor
+    depends_on:
+      - dvwa
+    networks:
+      - adversary_sim_network
+
+networks:
+  adversary_sim_network:
+    driver: bridge
